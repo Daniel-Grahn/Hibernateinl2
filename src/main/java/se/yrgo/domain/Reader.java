@@ -28,6 +28,18 @@ public class Reader {
         this.email = email;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    
     public void addBook(Book book) {
         this.books.add(book);
     }

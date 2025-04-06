@@ -15,10 +15,10 @@ public class Create {
     public static void main(String[] args) {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
-        //setUp(em);
+        // setUp(em);
 
         tx.begin();
-        task2(em);
+        task3(em);
 
         tx.commit();
         em.close();
@@ -79,6 +79,19 @@ public class Create {
         Set<Book> theAuthorBooks = theAuthor.getBooks();
         for (Book book : theAuthorBooks) {
             System.out.println(book);
+        }
+    }
+
+    public static void task3(EntityManager em) {
+
+        Book theBook = em.find(Book.class, 3);
+        Query query = em.createQuery("FROM Reader reader WHERE :book member of reader.books");
+        query.setParameter("book", theBook);
+        
+        List<Reader> readers = query.getResultList();
+
+        for (Reader reader : readers) {
+            System.out.println("reader: " + reader.getName() +" "+ reader.getBooks());
         }
     }
 }
