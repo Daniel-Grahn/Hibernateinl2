@@ -18,7 +18,7 @@ public class Create {
         // setUp(em);
 
         tx.begin();
-        task3(em);
+        task4(em);
 
         tx.commit();
         em.close();
@@ -43,7 +43,7 @@ public class Create {
         // Koppla böcker till författare
         a1.addBook(b1);
         a1.addBook(b2);
-        a2.addBook(b3);
+        a1.addBook(b3);
         a3.addBook(b4);
         a3.addBook(b5);
 
@@ -92,6 +92,22 @@ public class Create {
 
         for (Reader reader : readers) {
             System.out.println("reader: " + reader.getName() +" "+ reader.getBooks());
+        }
+    }
+
+    public static void task4(EntityManager em) {
+        //inner join
+        Query query = em.createQuery( 
+            "SELECT DISTINCT author " +
+            "FROM Author author " +
+            "JOIN author.books book " +
+            "JOIN book.readers reader"
+        );
+        
+        List<Author> authors = query.getResultList(); // Kräver castning vid behov
+        
+        for (Author author : authors) {
+            System.out.println(author);
         }
     }
 }
