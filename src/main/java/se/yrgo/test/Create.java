@@ -2,7 +2,11 @@ package se.yrgo.test;
 
 import se.yrgo.domain.*;
 
+import javax.security.auth.Subject;
+
 import jakarta.persistence.*;
+
+import java.util.*;
 
 public class Create {
 
@@ -12,14 +16,15 @@ public class Create {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         //setUp(em);
-        tx.begin();
 
+        tx.begin();
+        task2(em);
 
         tx.commit();
         em.close();
     }
 
-    public static void setUp(EntityManager em){
+    public static void setUp(EntityManager em) {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
@@ -67,5 +72,13 @@ public class Create {
         tx.commit();
         em.close();
     }
-}
 
+    public static void task2(EntityManager em) {
+        Author theAuthor = em.find(Author.class, 1);
+        System.out.println(theAuthor.toString());
+        Set<Book> theAuthorBooks = theAuthor.getBooks();
+        for (Book book : theAuthorBooks) {
+            System.out.println(book);
+        }
+    }
+}
