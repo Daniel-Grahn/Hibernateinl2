@@ -18,7 +18,7 @@ public class Create {
         // setUp(em);
 
         tx.begin();
-        task4(em);
+        task5(em);
 
         tx.commit();
         em.close();
@@ -87,27 +87,43 @@ public class Create {
         Book theBook = em.find(Book.class, 3);
         Query query = em.createQuery("FROM Reader reader WHERE :book member of reader.books");
         query.setParameter("book", theBook);
-        
+
         List<Reader> readers = query.getResultList();
 
         for (Reader reader : readers) {
-            System.out.println("reader: " + reader.getName() +" "+ reader.getBooks());
+            System.out.println("reader: " + reader.getName() + " " + reader.getBooks());
         }
     }
 
     public static void task4(EntityManager em) {
-        //inner join
-        Query query = em.createQuery( 
-            "SELECT DISTINCT author " +
-            "FROM Author author " +
-            "JOIN author.books book " +
-            "JOIN book.readers reader"
-        );
-        
+        // inner join
+        Query query = em.createQuery(
+                "SELECT DISTINCT author " +
+                "FROM Author author " +
+                "JOIN author.books book " +
+                "JOIN book.readers reader");
+
         List<Author> authors = query.getResultList(); // Kräver castning vid behov
-        
+
         for (Author author : authors) {
             System.out.println(author);
         }
     }
+
+    public static void task5(EntityManager em) {
+        Query query = em.createQuery(
+                "SELECT author.name, author.id, COUNT(book) " +
+                "FROM Author author " +
+                "JOIN author.books book " +
+                "GROUP BY author.name, author.id");
+
+        // Ändra till rätt typ
+        List<Object[]> results = (List<Object[]>) query.getResultList();
+
+        // Iterera över resultaten
+        for (Object[] result : results) {
+            System.out.println("Author: " + result[0] + " (id: "+result[1] +") has " + result[2] + " books.");
+        }
+    }
+
 }
