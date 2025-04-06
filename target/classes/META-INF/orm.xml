@@ -5,10 +5,9 @@
     version="2.0">
 
 
-	<!--  this is used in the chapter on HQL, where we write a named query -->
-    <named-query name="searchByName">
-        <query>from Author as author where author.name = :name</query>
+	<!--  this is used in task6 -->
+    <named-query name="searchByGenre">
+        <query>FROM Author author JOIN author.books book where book.genre = :genre</query>
     </named-query>
-	<!--  please ignore it until then! -->
 
 </entity-mappings>

@@ -37,6 +37,10 @@ public class Author {
         return books;
     }
 
+    public int getId() {
+        return id;
+    }
+    
     public String getName() {
         return name;
     }
